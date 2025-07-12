@@ -1,6 +1,6 @@
 # Learning Lab 🧪
 
-Welcome to my **Learning Lab** — a collection of coding exercises, mini-projects, and assignments that I’ve completed during my journey through Coursera courses, virtual internships, and other online learning platforms.
+Welcome to my **Learning Lab** — a collection of coding exercises, mini-projects, and assignments that I’ve completed during my journey through Coursera final projects, virtual internships, and other online learning platforms and finally some fun mini projects to improve my coding journey.
 
 ## 🎯 Purpose
 

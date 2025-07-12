@@ -17,6 +17,28 @@ learning_lab/
 ├─ Java codes/
 │   ├─ PerimeterCalculator.java
 │   └─ README.md
+├─ apex internship tasks/
+│   ├─ apex_task-1/
+│      ├─ index.html
+│      ├─ script.js
+│      ├─ style.css
+│      └─ README.md
+│   ├─ apex_task-2/
+│      ├─ index.html
+│      ├─ script.js
+│      ├─ style.css
+│      └─ README.md
+│   ├─ apex_task-3/
+│      ├─ index.html
+│      ├─ script.js
+│      ├─ style.css
+│      └─ README.md
+│   ├─ apex_task-4/
+│      ├─ index.html
+│      ├─ script.js
+│      ├─ style.css
+│      └─ README.md
+│   └─ README.md
 ├─ jassi-coursera-final-project-portfolio/
 │   ├─ index.html
 │   ├─ script.js
@@ -32,6 +54,19 @@ learning_lab/
 │   ├─ script.js
 │   ├─ style.css
 │   └─ README.md
+├─ todo-list/
+│   ├── bow.jpeg
+│   ├── index.html     
+│   ├── today.html    
+│   ├── weekly.html   
+│   ├── monthly.html   
+│   ├── yearly.html    
+│   ├── sleep.html  
+│   ├── water.html   
+│   ├── marks.html 
+│   ├── style.css  
+│   ├── script.js  
+│   └── README.md              
 ├─ .nojekyll
 └─ README.md
 

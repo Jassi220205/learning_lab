@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cherry To-Do List</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Quicksand&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <h2>🍒 CherryTasks</h2>
+      <nav>
+        <ul>
+          <li><a href="today.html">Today's Tasks</a></li>
+          <li><a href="weekly.html">Weekly Goals</a></li>
+          <li><a href="monthly.html">Monthly Goals</a></li>
+          <li><a href="yearly.html">Yearly Goals</a></li>
+          <li><a href="water.html">Water Intake</a></li>
+          <li><a href="sleep.html">Sleep Cycle</a></li>
+          <li><a href="marks.html">Marks Tracker</a></li>
+        </ul>
+      </nav>
+      <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Mode</button>
+    </aside>
+
+    <main class="main-content">
+      <header>
+        <h1>Welcome to Your Cherry Ribbon To-Do List 🍒🎀</h1>
+      </header>
+
+      <div class="card-grid">
+        <div class="card" onclick="location.href='today.html'">
+          <h3>Today's Tasks</h3>
+          <p>See what needs to be done today!</p>
+        </div>
+        <div class="card" onclick="location.href='weekly.html'">
+          <h3>Weekly Goals</h3>
+          <p>Track your weekly ambitions 🌟</p>
+        </div>
+        <div class="card" onclick="location.href='monthly.html'">
+          <h3>Monthly Goals</h3>
+          <p>Keep an eye on this month's goals 🌸</p>
+        </div>
+        <div class="card" onclick="location.href='yearly.html'">
+          <h3>Yearly Goals</h3>
+          <p>Long-term dreams and plans 🎯</p>
+        </div>
+        <div class="card" onclick="location.href='water.html'">
+          <h3>Water Intake</h3>
+          <p>Hydration habits for the week 💧</p>
+        </div>
+        <div class="card" onclick="location.href='sleep.html'">
+          <h3>Sleep Cycle</h3>
+          <p>Track how well you rest 💤</p>
+        </div>
+        <div class="card" onclick="location.href='marks.html'">
+          <h3>Marks Tracker</h3>
+          <p>Visualize subjects and performance 📚</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

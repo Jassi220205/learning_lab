@@ -1,0 +1,189 @@
+/* style.css */
+
+:root {
+  --pink-light: #ffe0f0;
+  --dark-blue: #1e1f3d;
+  --text-light: #222;
+  --text-dark: #eee;
+  --accent: #f28db2;
+  --hover: #ffb3c6;
+  --ribbon: url('https://i.imgur.com/6cp1QJq.png'); /* replace with your ribbon pattern */
+  --cherry: url('https://i.imgur.com/54e3R5O.png'); /* replace with cherry accent if needed */
+}
+
+body {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  background-color: var(--pink-light);
+  color: var(--text-light);
+  transition: 0.3s ease all;
+}
+
+body.dark-mode {
+  background-color: var(--dark-blue);
+  color: var(--text-dark);
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: var(--accent);
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  background-image: url("bow.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+}
+
+.sidebar h2 {
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.sidebar nav li {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.sidebar nav a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.sidebar nav a:hover {
+  color: var(--hover);
+}
+
+.toggle-btn {
+  background-color: white;
+  color: var(--accent);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  background-color: var(--hover);
+  color: white;
+}
+
+body.dark-mode .card {
+  background-color: #2e2e5d;
+  color: white;
+}
+
+body.dark-mode .card:hover {
+  background-color: #3a3a7d;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .sidebar {
+    flex-direction: row;
+    width: 100%;
+    overflow-x: auto;
+    gap: 1rem;
+  }
+  .main-content {
+    padding: 1rem;
+  }
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  outline: none;
+  cursor: pointer;
+  position: relative;
+}
+
+input[type="checkbox"]:checked::before {
+  content: "\2713";
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  background-color: var(--accent);
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  background-color: var(--accent);
+  color: white;
+  padding: 0.7em 1.5em;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+button:hover {
+  background-color: var(--hover);
+}
+
+/* Add floral/cherry background patterns to enhance further */

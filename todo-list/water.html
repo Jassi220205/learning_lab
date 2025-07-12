@@ -1,0 +1,202 @@
+<!-- water.html -->
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Water Intake Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    form {
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+    }
+    /* container for each day label + input vertically stacked */
+    .day-input {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 60px;
+      flex: 0 0 auto;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: var(--accent);
+      user-select: none;
+    }
+    input[type="number"] {
+      padding: 0.5rem;
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      font-size: 1rem;
+      width: 60px;
+      text-align: center;
+      transition: border-color 0.3s ease;
+    }
+    input[type="number"]:focus {
+      border-color: var(--hover);
+      outline: none;
+    }
+    button {
+      padding: 0.5rem 1.5rem;
+      font-weight: 600;
+      border-radius: 20px;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    button:hover {
+      background-color: var(--hover);
+    }
+    #chartContainer {
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+    /* Scrollbar styling for horizontal form overflow */
+    form::-webkit-scrollbar {
+      height: 8px;
+    }
+    form::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 4px;
+    }
+    form::-webkit-scrollbar-track {
+      background: var(--pink-light);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>💧 Water Intake Tracker</h2>
+      <nav>
+        <ul>
+          <li><a href="index.html">← Back to Home</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="main-content">
+      <header><h1>Track Your Weekly Water Intake (Liters)</h1></header>
+      <form id="waterForm">
+        <div class="day-input">
+          <label for="mon">Mon</label>
+          <input type="number" id="mon" name="mon" min="0" max="10" step="0.1" required />
+        </div>
+        <div class="day-input">
+          <label for="tue">Tue</label>
+          <input type="number" id="tue" name="tue" min="0" max="10" step="0.1" required />
+        </div>
+        <div class="day-input">
+          <label for="wed">Wed</label>
+          <input type="number" id="wed" name="wed" min="0" max="10" step="0.1" required />
+        </div>
+        <div class="day-input">
+          <label for="thu">Thu</label>
+          <input type="number" id="thu" name="thu" min="0" max="10" step="0.1" required />
+        </div>
+        <div class="day-input">
+          <label for="fri">Fri</label>
+          <input type="number" id="fri" name="fri" min="0" max="10" step="0.1" required />
+        </div>
+        <div class="day-input">
+          <label for="sat">Sat</label>
+          <input type="number" id="sat" name="sat" min="0" max="10" step="0.1" required />
+        </div>
+        <div class="day-input">
+          <label for="sun">Sun</label>
+          <input type="number" id="sun" name="sun" min="0" max="10" step="0.1" required />
+        </div>
+        <button type="submit">Save</button>
+      </form>
+      <div id="chartContainer">
+        <canvas id="waterChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const waterForm = document.getElementById('waterForm');
+    const STORAGE_KEY = 'weeklyWaterIntake';
+
+    function loadData() {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+        mon: 0, tue: 0, wed: 0, thu: 0, fri: 0, sat: 0, sun: 0
+      };
+      for (const day in data) {
+        document.getElementById(day).value = data[day];
+      }
+      return data;
+    }
+
+    function saveData(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function renderChart(data) {
+      const ctx = document.getElementById('waterChart').getContext('2d');
+      if(window.waterChart) {
+        window.waterChart.destroy();
+      }
+      window.waterChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          datasets: [{
+            label: 'Water Intake (L)',
+            data: Object.values(data),
+            backgroundColor: [
+              '#f28db2', '#ffb3c6', '#ffcad4', '#ffe0f0', '#ffd1dc', '#f8bbd0', '#f48fb1'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom',
+            },
+            tooltip: {
+              callbacks: {
+                label: ctx => `${ctx.label}: ${ctx.parsed} L`
+              }
+            }
+          }
+        }
+      });
+    }
+
+    waterForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const data = {};
+      let valid = true;
+      ['mon','tue','wed','thu','fri','sat','sun'].forEach(day => {
+        const val = parseFloat(document.getElementById(day).value);
+        if (isNaN(val) || val < 0 || val > 10) valid = false;
+        data[day] = val;
+      });
+      if (!valid) {
+        alert('Please enter valid water intake between 0 and 10 liters.');
+        return;
+      }
+      saveData(data);
+      renderChart(data);
+    });
+
+    // Initial load
+    const initialData = loadData();
+    renderChart(initialData);
+  </script>
+</body>
+</html>

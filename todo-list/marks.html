@@ -1,0 +1,149 @@
+<!-- marks.html -->
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Subjects & Marks</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    form {
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    input[type="text"], input[type="number"] {
+      padding: 0.5rem;
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      font-size: 1rem;
+      flex: 1 1 120px;
+      max-width: 200px;
+    }
+    button {
+      padding: 0.5rem 1.2rem;
+      font-weight: 600;
+      border-radius: 20px;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: var(--hover);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 1rem;
+    }
+    li {
+      margin-bottom: 0.8rem;
+      background: white;
+      padding: 0.7rem 1rem;
+      border-radius: 1.2rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li span {
+      font-weight: 600;
+      color: var(--dark-blue);
+    }
+    li button.delete-btn {
+      background: #f28db2;
+      border: none;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    li button.delete-btn:hover {
+      background: #ffb3c6;
+    }
+    body.dark-mode li {
+      background: #2e2e5d;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>📚 Subjects & Marks</h2>
+      <nav>
+        <ul>
+          <li><a href="index.html">← Back to Home</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="main-content">
+      <header><h1>Add/Edit Your Subjects & Marks</h1></header>
+      <form id="marksForm">
+        <input type="text" id="subjectInput" placeholder="Subject name" required />
+        <input type="number" id="markInput" placeholder="Mark (0-100)" min="0" max="100" required />
+        <button type="submit">Add/Update</button>
+      </form>
+      <ul id="marksList"></ul>
+    </div>
+  </div>
+
+  <script>
+    const marksForm = document.getElementById('marksForm');
+    const subjectInput = document.getElementById('subjectInput');
+    const markInput = document.getElementById('markInput');
+    const marksList = document.getElementById('marksList');
+    const STORAGE_KEY = 'subjectsMarks';
+
+    function loadMarks() {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      marksList.innerHTML = '';
+      data.forEach(({subject, mark}, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span>${subject}: ${mark} / 100</span>
+          <button class="delete-btn" onclick="deleteMark(${index})">&times;</button>
+        `;
+        marksList.appendChild(li);
+      });
+    }
+
+    function deleteMark(index) {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      data.splice(index, 1);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      loadMarks();
+    }
+
+    marksForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const subject = subjectInput.value.trim();
+      const mark = Number(markInput.value);
+      if (!subject || mark < 0 || mark > 100) {
+        alert('Please enter a valid subject and a mark between 0 and 100.');
+        return;
+      }
+      let data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      // Update if subject exists
+      const existingIndex = data.findIndex(item => item.subject.toLowerCase() === subject.toLowerCase());
+      if (existingIndex >= 0) {
+        data[existingIndex].mark = mark;
+      } else {
+        data.push({ subject, mark });
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      subjectInput.value = '';
+      markInput.value = '';
+      loadMarks();
+    });
+
+    loadMarks();
+  </script>
+</body>
+</html>

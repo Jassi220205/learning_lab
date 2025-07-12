@@ -1,0 +1,250 @@
+<!-- yearly.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yearly Goals</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      background-color: var(--accent, #f28db2);
+      color: white;
+      padding: 2rem 1.5rem;
+      width: 220px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+    .sidebar h2 {
+      margin-bottom: 1.5rem;
+    }
+    .sidebar nav ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .sidebar nav ul li {
+      margin-bottom: 1rem;
+    }
+    .sidebar nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .sidebar nav a:hover {
+      color: var(--hover, #ffb3c6);
+    }
+    .main-content {
+      flex-grow: 1;
+      padding: 2rem;
+    }
+    header h1 {
+      margin-bottom: 2rem;
+    }
+
+    /* Form styling */
+    #yearlyForm {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #yearlyInput {
+      flex-grow: 1;
+      padding: 0.8rem 1rem;
+      font-size: 1.1rem;
+      border: 2px solid var(--accent, #f28db2);
+      border-radius: 30px;
+      outline-offset: 2px;
+      transition: border-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    #yearlyInput:focus {
+      border-color: var(--hover, #ffb3c6);
+      box-shadow: 0 0 8px var(--hover, #ffb3c6);
+    }
+    #yearlyForm button {
+      background-color: var(--accent, #f28db2);
+      color: white;
+      font-weight: 700;
+      border: none;
+      border-radius: 30px;
+      padding: 0 2rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    #yearlyForm button:hover {
+      background-color: var(--hover, #ffb3c6);
+      box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+    }
+
+    ul#yearlyGoals {
+      list-style: none;
+      padding-left: 0;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    ul#yearlyGoals li {
+      background: white;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.8rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1.1rem;
+      cursor: grab;
+    }
+    ul#yearlyGoals li.completed label {
+      text-decoration: line-through;
+      color: #888;
+    }
+    ul#yearlyGoals li label {
+      flex-grow: 1;
+      cursor: pointer;
+    }
+    ul#yearlyGoals li button.edit-btn,
+    ul#yearlyGoals li button.delete-btn {
+      margin-left: 0.5rem;
+      background: var(--accent, #f28db2);
+      border: none;
+      color: white;
+      border-radius: 8px;
+      padding: 0.3rem 0.7rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    ul#yearlyGoals li button.edit-btn:hover {
+      background-color: var(--hover, #ffb3c6);
+    }
+    ul#yearlyGoals li button.delete-btn:hover {
+      background-color: #ff5c7c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>📆 Yearly Goals</h2>
+      <nav>
+        <ul>
+          <li><a href="index.html">← Back to Home</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="main-content">
+      <header><h1>Yearly Goals & Progress</h1></header>
+      <form id="yearlyForm">
+        <input type="text" id="yearlyInput" placeholder="Add a yearly goal..." required />
+        <button type="submit">Add</button>
+      </form>
+      <ul id="yearlyGoals"></ul>
+    </div>
+  </div>
+
+  <script>
+    const yearlyForm = document.getElementById('yearlyForm');
+    const yearlyInput = document.getElementById('yearlyInput');
+    const yearlyGoals = document.getElementById('yearlyGoals');
+
+    const STORAGE_KEY = 'yearlyGoals';
+
+    function loadGoals() {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      yearlyGoals.innerHTML = '';
+      data.forEach((goal, i) => {
+        const li = document.createElement('li');
+        li.className = goal.done ? 'completed' : '';
+        li.draggable = true;
+        li.innerHTML = `
+          <label><input type="checkbox" ${goal.done ? 'checked' : ''} onchange="toggleDone(${i})"> ${goal.text}</label>
+          <div>
+            <button class="edit-btn" onclick="editGoal(${i})">Edit</button>
+            <button class="delete-btn" onclick="deleteGoal(${i})">&times;</button>
+          </div>
+        `;
+
+        li.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('text/plain', i);
+          e.currentTarget.style.opacity = '0.5';
+        });
+        li.addEventListener('dragend', e => {
+          e.currentTarget.style.opacity = '1';
+        });
+        li.addEventListener('dragover', e => {
+          e.preventDefault();
+        });
+        li.addEventListener('drop', e => {
+          e.preventDefault();
+          const draggedIndex = parseInt(e.dataTransfer.getData('text/plain'));
+          const targetIndex = i;
+          if (draggedIndex === targetIndex) return;
+
+          const goals = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+          const [draggedGoal] = goals.splice(draggedIndex, 1);
+          goals.splice(targetIndex, 0, draggedGoal);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(goals));
+          loadGoals();
+        });
+
+        yearlyGoals.appendChild(li);
+      });
+    }
+
+    function toggleDone(index) {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      data[index].done = !data[index].done;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      loadGoals();
+    }
+
+    function deleteGoal(index) {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      data.splice(index, 1);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      loadGoals();
+    }
+
+    function editGoal(index) {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      const newText = prompt('Edit goal:', data[index].text);
+      if (newText !== null) {
+        const trimmedText = newText.trim();
+        if (trimmedText) {
+          data[index].text = trimmedText;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+          loadGoals();
+        }
+      }
+    }
+
+    yearlyForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const goalText = yearlyInput.value.trim();
+      if (!goalText) return;
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      data.push({ text: goalText, done: false });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      yearlyInput.value = '';
+      loadGoals();
+    });
+
+    loadGoals();
+  </script>
+</body>
+</html>

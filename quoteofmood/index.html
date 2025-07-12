@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreamy Quote Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="quote-box">
+            <p class="quote">
+                <span class="quote-item">"Believe in your infinite potential. Your only limitations are those you set upon yourself."</span>
+                <span class="quote-item">"Stars can’t shine without darkness. Keep going, you’re doing great!"</span>
+                <span class="quote-item">"The best time for new beginnings is now. Trust yourself."</span>
+                <span class="quote-item">"Pain changes people, some become rude and some become silent"</span>
+                <span class="quote-item">"Being alone is alright but get yourself a person to lean on"</span>
+                <span class="quote-item">"You only have yourself"</span>
+                <span class="quote-item">"People notice cuts, not scars"</span>
+                <span class="quote-item">"Feel it. Understand it. Accept it."</span>
+                <span class="quote-item">"Not everyone deserves your attention"</span>
+                <span class="quote-item">"Let it go, it's all right. It'll come back if it's meant to be yours"</span>
+            </p>
+            <p class="author">- Jassi
+
+            </p>
+
+            <a href="#" class="btn" onclick="nextQuote()">New Quote</a>
+        </div>
+    </div>
+
+    <script>
+        let index = 0;
+        function nextQuote() {
+            let quotes = document.querySelectorAll(".quote-item");
+            quotes.forEach(q => q.style.display = "none"); 
+            index = (index + 1) % quotes.length; 
+            quotes[index].style.display = "block"; 
+        }
+        document.addEventListener("DOMContentLoaded", () => nextQuote());
+    </script>
+</body>
+</html>

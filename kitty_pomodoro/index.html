@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kitty Pomodoro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="toggle-mode">
+    <label class="switch">
+      <input type="checkbox" id="modeToggle">
+      <span class="slider round"></span>
+    </label>
+  </div>
+
+  <div class="container">
+    <div class="pomodoro-box">
+      <h1>Kitty Pomodoro</h1>
+      <div id="timer">25:00</div>
+      <div class="buttons">
+        <button id="startBtn">Start</button>
+        <button id="stopBtn">Stop</button>
+        <button id="resetBtn">Reset</button>
+        <button id="customBtn">Custom</button>
+      </div>
+    </div>
+
+    <div class="cat">
+      <img src="kitty.png" alt="Walking Cat" />
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

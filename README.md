@@ -17,58 +17,64 @@ learning_lab/
 ├─ Java codes/
 │   ├─ PerimeterCalculator.java
 │   └─ README.md
+│
 ├─ apex internship tasks/
 │   ├─ apex_task-1/
-│      ├─ index.html
-│      ├─ script.js
-│      ├─ style.css
-│      └─ README.md
+│   │   ├─ index.html
+│   │   ├─ script.js
+│   │   ├─ style.css
+│   │   └─ README.md
 │   ├─ apex_task-2/
-│      ├─ index.html
-│      ├─ script.js
-│      ├─ style.css
-│      └─ README.md
+│   │   ├─ index.html
+│   │   ├─ script.js
+│   │   ├─ style.css
+│   │   └─ README.md
 │   ├─ apex_task-3/
-│      ├─ index.html
-│      ├─ script.js
-│      ├─ style.css
-│      └─ README.md
+│   │   ├─ index.html
+│   │   ├─ script.js
+│   │   ├─ style.css
+│   │   └─ README.md
 │   ├─ apex_task-4/
-│      ├─ index.html
-│      ├─ script.js
-│      ├─ style.css
-│      └─ README.md
+│   │   ├─ index.html
+│   │   ├─ script.js
+│   │   ├─ style.css
+│   │   └─ README.md
 │   └─ README.md
+│
 ├─ jassi-coursera-final-project-portfolio/
 │   ├─ index.html
 │   ├─ script.js
 │   ├─ style.css
 │   └─ README.md
+│
 ├─ kitty_pomodoro/
 │   ├─ index.html
 │   ├─ script.js
 │   ├─ style.css
 │   └─ README.md
+│
 ├─ quoteofmood/
 │   ├─ index.html
 │   ├─ script.js
 │   ├─ style.css
 │   └─ README.md
+│
 ├─ todo-list/
-│   ├── bow.jpeg
-│   ├── index.html     
-│   ├── today.html    
-│   ├── weekly.html   
-│   ├── monthly.html   
-│   ├── yearly.html    
-│   ├── sleep.html  
-│   ├── water.html   
-│   ├── marks.html 
-│   ├── style.css  
-│   ├── script.js  
-│   └── README.md              
+│   ├─ bow.jpeg
+│   ├─ index.html     
+│   ├─ today.html    
+│   ├─ weekly.html   
+│   ├─ monthly.html   
+│   ├─ yearly.html    
+│   ├─ sleep.html  
+│   ├─ water.html   
+│   ├─ marks.html 
+│   ├─ style.css  
+│   ├─ script.js  
+│   └─ README.md
+│
 ├─ .nojekyll
-└─ README.md
+└─ README.md (this file)
 
 ## Individual Links
 https://jassi220205.github.io/learning_lab/Java codes/

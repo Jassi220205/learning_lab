@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE student SYSTEM "student.dtd">
+
+<student>
+    <name>John</name>
+    <age>22</age>
+    <email>john@gmail.com</email>
+</student>

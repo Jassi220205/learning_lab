@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h3>Media Events</h3>
+<video width="300" controls
+       onplay="msg('Video Playing')"
+       onpause="msg('Video Paused')"
+       onended="msg('Video Ended')"
+       onvolumechange="msg('Volume Changed')">
+  <source src="sample.mp4" type="video/mp4">
+</video>
+
+<p id="out"></p>
+
+<script>
+function msg(text) {
+    document.getElementById("out").innerHTML = text;
+}
+</script>
+
+</body>
+</html>

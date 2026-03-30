@@ -1,0 +1,17 @@
+<h2 id="heading">Welcome</h2>
+<button onclick="darkMode()">Dark Mode</button>
+<button onclick="lightMode()">Light Mode</button>
+
+<script>
+function darkMode() {
+    document.body.style.background = "black";
+    document.body.style.color = "white";
+    document.getElementById("heading").innerHTML = "Dark Mode Enabled";
+}
+
+function lightMode() {
+    document.body.style.background = "white";
+    document.body.style.color = "black";
+    document.getElementById("heading").innerHTML = "Light Mode Enabled";
+}
+</script>

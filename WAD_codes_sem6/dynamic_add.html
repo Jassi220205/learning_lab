@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<button onclick="addItem()">Add Item</button>
+<ul id="list"></ul>
+
+<script>
+function addItem() {
+    let li = document.createElement("li");
+    li.textContent = "New Item";
+    document.getElementById("list").appendChild(li);
+}
+</script>
+
+</body>
+</html>

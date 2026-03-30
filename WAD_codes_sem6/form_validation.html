@@ -1,0 +1,30 @@
+<form onsubmit="return validate()">
+    Name: <input type="text" id="name"><br><br>
+    Email: <input type="text" id="email"><br><br>
+    Password: <input type="password" id="pwd"><br><br>
+    <input type="submit" value="Register">
+</form>
+
+<script>
+function validate() {
+    let n = document.getElementById("name").value;
+    let e = document.getElementById("email").value;
+    let p = document.getElementById("pwd").value;
+
+    if (n == "") {
+        alert("Name required");
+        return false;
+    }
+    if (!e.includes("@")) {
+        alert("Invalid email");
+        return false;
+    }
+    if (p.length < 6) {
+        alert("Password too short");
+        return false;
+    }
+
+    alert("Registration Successful");
+    return true;
+}
+</script>

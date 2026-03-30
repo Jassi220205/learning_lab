@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation</title>
+    <script>
+        function validateForm() {
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let age = document.getElementById("age").value;
+
+            let namePattern = /^[A-Za-z ]+$/;
+            let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            let passwordPattern = /^(?=.*[A-Z])(?=.*[0-9]).{8,}$/;
+
+            if (!namePattern.test(name)) {
+                alert("Invalid Name");
+                return false;
+            }
+
+            if (!emailPattern.test(email)) {
+                alert("Invalid Email");
+                return false;
+            }
+
+            if (!passwordPattern.test(password)) {
+                alert("Password must contain 8 characters, 1 uppercase, 1 number");
+                return false;
+            }
+
+            if (age < 18 || age > 60) {
+                alert("Age must be between 18 and 60");
+                return false;
+            }
+
+            alert("Form Submitted Successfully");
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <form onsubmit="return validateForm()">
+        Name: <input type="text" id="name"><br><br>
+        Email: <input type="text" id="email"><br><br>
+        Password: <input type="password" id="password"><br><br>
+        Age: <input type="number" id="age"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

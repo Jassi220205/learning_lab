@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Decision Making and Loops</title>
+</head>
+<body>
+
+<h2>Decision Making Statements</h2>
+<p id="decision"></p>
+
+<h2>Loop Constructs</h2>
+<p id="loops"></p>
+
+<script>
+    let decisionOutput = "";
+    let loopOutput = "";
+
+    // Decision making
+    let marks = 82;
+
+    if (marks >= 90) {
+        decisionOutput += "Grade: A<br>";
+    } else if (marks >= 75) {
+        decisionOutput += "Grade: B<br>";
+    } else {
+        decisionOutput += "Grade: C<br>";
+    }
+
+    let day = 3;
+    switch (day) {
+        case 1: decisionOutput += "Monday<br>"; break;
+        case 2: decisionOutput += "Tuesday<br>"; break;
+        case 3: decisionOutput += "Wednesday<br>"; break;
+        default: decisionOutput += "Invalid day<br>";
+    }
+
+    document.getElementById("decision").innerHTML = decisionOutput;
+
+    // Loop constructs
+    for (let i = 1; i <= 5; i++) {
+        loopOutput += "For Loop: " + i + "<br>";
+    }
+
+    let j = 1;
+    while (j <= 3) {
+        loopOutput += "While Loop: " + j + "<br>";
+        j++;
+    }
+
+    document.getElementById("loops").innerHTML = loopOutput;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AlterEgo OS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>AlterEgo OS</h1>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <input type="checkbox" id="themeSwitch">
+        <label for="themeSwitch" class="toggle-label">
+            <span class="icon">☀️</span>
+            <span class="icon">🌙</span>
+        </label>
+    </div>
+
+    <form id="decisionForm" class="form-grid">
+
+        <div class="field">
+            <label>Task</label>
+            <input type="text" name="task" required>
+        </div>
+
+        <div class="field">
+            <label>Deadline</label>
+            <input type="number" name="deadline" required>
+        </div>
+
+        <div class="field">
+            <label>Effort</label>
+            <input type="number" name="effort" min="1" max="10" required>
+        </div>
+
+        <div class="field">
+            <label>Short Reward</label>
+            <input type="number" name="shortReward" min="1" max="10" required>
+        </div>
+
+        <div class="field">
+            <label>Long Reward</label>
+            <input type="number" name="longReward" min="1" max="10" required>
+        </div>
+
+        <div class="field">
+            <label>Energy</label>
+            <input type="number" name="energy" min="1" max="10" required>
+        </div>
+
+        <button type="submit" class="submit-btn">Simulate</button>
+    </form>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

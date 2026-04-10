@@ -1,0 +1,226 @@
+/* =========================
+   STREWBERRY & OCEAN PALETTE
+========================= */
+:root {
+    --strawberry-pink: #ff4d94;
+    --ocean-blue: #0077be;
+    --deep-ocean: #1e3a8a;
+    --glass-bg: rgba(255, 255, 255, 0.15);
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    color: white;
+    /* Main Gradient: Ocean Blue to Strawberry Pink */
+    background: linear-gradient(135deg, var(--deep-ocean), var(--ocean-blue), var(--strawberry-pink));
+    background-attachment: fixed;
+    transition: background 0.6s ease;
+}
+
+/* Alternate Theme (Flips the focus) */
+body.alt-theme {
+    background: linear-gradient(135deg, #ff89c9, var(--strawberry-pink), #8e44ad);
+}
+
+/* =========================
+   CONTAINER & GLASS EFFECT
+========================= */
+.container {
+    width: 80%;
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 40px;
+    background: var(--glass-bg);
+    border-radius: 24px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative; /* Keeps toggle button in place */
+}
+
+/* =========================
+   HEADINGS
+========================= */
+h1 {
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #cbd5f5;
+    margin-bottom: 20px;
+}
+
+/* =========================
+   FORM GRID (HORIZONTAL)
+========================= */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    align-items: end;
+}
+
+/* INPUT FIELD BLOCK */
+.field {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+}
+
+.field input {
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+}
+
+/* =========================
+   RESULTS GRID (Fixes current layout)
+========================= */
+#results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* CARDS */
+.card {
+    padding: 25px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, background 0.3s ease;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.card h2 {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.card p {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.card span {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* =========================
+   UI ELEMENTS
+========================= */
+.submit-btn {
+    grid-column: span 6; /* Spans the full form width */
+    background: var(--strawberry-pink);
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 77, 148, 0.4);
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background: #ff1a75;
+    transform: scale(1.03);
+}
+
+/* =========================
+   THEME TOGGLE (SUN/MOON)
+========================= */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.toggle-label {
+    width: 60px;
+    height: 30px;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 30px;
+    padding: 5px;
+    cursor: pointer;
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.toggle-label .icon {
+    font-size: 14px;
+}
+
+#themeSwitch {
+    display: none;
+}
+
+/* Toggle slider */
+.toggle-label::after {
+    content: "";
+    width: 22px;
+    height: 22px;
+    background: white;
+    position: absolute;
+    border-radius: 50%;
+    left: 4px;
+    transition: 0.3s;
+}
+
+#themeSwitch:checked + .toggle-label::after {
+    transform: translateX(30px);
+}
+
+/* =========================
+   BUTTONS / LINKS
+========================= */
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.back-btn {
+    display: block;
+    margin-top: 25px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* =========================
+   RESPONSIVENESS
+========================= */
+@media (max-width: 900px) {
+    .container {
+        width: 90%;
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .submit-btn {
+        grid-column: span 2;
+    }
+}

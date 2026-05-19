@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPAC E-Library System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .main-content {
+            padding: 30px;
+            min-height: 70vh;
+        }
+
+        .auth-form {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60, #229954);
+        }
+
+        .dashboard {
+            display: none;
+        }
+
+        .section {
+            display: none;
+            margin-bottom: 30px;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .book-card {
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 20px;
+            background: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .book-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .book-author {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+
+        .book-status {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .status-available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-borrowed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-reserved {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 6px;
+        }
+
+        .history-table, .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e1e8ed;
+        }
+
+        th {
+            background: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .role-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .role-user { background: #3498db; }
+        .role-admin { background: #e74c3c; }
+
+        .logout-btn {
+            background: #95a5a6;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .nav-tab.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .user-info {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 OPAC E-Library System</h1>
+            <p>Online Public Access Catalog</p>
+        </div>
+
+        <!-- Authentication Section -->
+        <div id="authSection" class="main-content">
+            <div class="auth-form">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="username" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Enter password">
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="role">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="login()">Login</button>
+                <div style="text-align: center; margin-top: 20px;">
+                    <small>Demo Credentials:</small><br>
+                    <strong>User:</strong> user1 / password: 123<br>
+                    <strong>Admin:</strong> admin / password: 123
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="main-content dashboard">
+            <div class="user-info">
+                <div>
+                    <h3>Welcome, <span id="currentUser"></span>!</h3>
+                    <span class="role-badge" id="roleBadge"></span>
+                </div>
+                <a href="#" class="logout-btn" onclick="logout()">Logout</a>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs" id="userNavTabs" style="display: none;">
+                <button class="nav-tab active" onclick="showSection('catalog')">Catalog</button>
+                <button class="nav-tab" onclick="showSection('myBooks')">My Books</button>
+                <button class="nav-tab" onclick="showSection('history')">History</button>
+            </div>
+
+            <div class="nav-tabs" id="adminNavTabs" style="display: none;">
+                <button class="nav-tab active" onclick="showSection('adminCatalog')">Books</button>
+                <button class="nav-tab" onclick="showSection('adminUsers')">Late Fees</button>
+            </div>
+
+            <!-- User Sections -->
+            <div id="catalog" class="section active">
+                <h2>📖 Book Catalog</h2>
+                <div id="booksGrid" class="book-grid"></div>
+            </div>
+
+            <div id="myBooks" class="section">
+                <h2>📚 My Books</h2>
+                <div id="myBooksGrid" class="book-grid"></div>
+            </div>
+
+            <div id="history" class="section">
+                <h2>📋 Activity History</h2>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Book</th>
+                            <th>Action</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTable"></tbody>
+                </table>
+            </div>
+
+            <!-- Admin Sections -->
+            <div id="adminCatalog" class="section">
+                <h2>📚 Manage Books</h2>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                    <h3>Add New Book</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Book Title</label>
+                            <input type="text" id="newBookTitle">
+                        </div>
+                        <div class="form-group">
+                            <label>Author</label>
+                            <input type="text" id="newBookAuthor">
+                        </div>
+                    </div>
+                    <button class="btn btn-success" onclick="addBook()">Add Book</button>
+                </div>
+                <div id="adminBooksGrid" class="book-grid"></div>
+            </div>
+
+            <div id="adminUsers" class="section">
+                <h2>💰 Late Fee Records</h2>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Book</th>
+                            <th>Due Date</th>
+                            <th>Days Late</th>
+                            <th>Fine ($)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lateFeeTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        let books = [
+            { id: 1, title: "The Great Gatsby", author: "F. Scott Fitzgerald", copies: [true, true, true] },
+            { id: 2, title: "To Kill a Mockingbird", author: "Harper Lee", copies: [true, true, false] },
+            { id: 3, title: "1984", author: "George Orwell", copies: [true, false, false] },
+            { id: 4, title: "Pride and Prejudice", author: "Jane Austen", copies: [true, true, true] },
+            { id: 5, title: "The Catcher in the Rye", author: "J.D. Salinger", copies: [false, true, true] }
+        ];
+
+        let currentUser = null;
+        let userActivity = [];
+        let borrowedBooks = [];
+        let reservations = [];
+
+        // Authentication
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            // Demo credentials
+            if ((username === 'user1' && password === '123' && role === 'user') ||
+                (username === 'admin' && password === '123' && role === 'admin')) {
+                
+                currentUser = { username, role };
+                document.getElementById('currentUser').textContent = username;
+                document.getElementById('roleBadge').textContent = role.toUpperCase();
+                document.getElementById('roleBadge').className = `role-badge role-${role}`;
+                
+                document.getElementById('authSection').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                
+                if (role === 'user') {
+                    document.getElementById('userNavTabs').style.display = 'flex';
+                } else {
+                    document.getElementById('adminNavTabs').style.display = 'flex';
+                }
+                
+                loadUserData();
+                renderCatalog();
+            } else {
+                alert('Invalid credentials!');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('authSection').style.display = 'block';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('role').value = 'user';
+        }
+
+        // Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active from all nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+            
+            // Render content
+            if (sectionId === 'catalog' || sectionId === 'adminCatalog') {
+                renderCatalog();
+            } else if (sectionId === 'myBooks') {
+                renderMyBooks();
+            } else if (sectionId === 'history') {
+                renderHistory();
+            } else if (sectionId === 'adminUsers') {
+                renderLateFees();
+            }
+        }
+
+        // Book operations
+        function renderCatalog() {
+            const container = document.getElementById('booksGrid');
+            const isAdmin = currentUser.role === 'admin';
+            const adminContainer = document.getElementById('adminBooksGrid');
+            
+            const targetContainer = isAdmin ? adminContainer : container;
+            targetContainer.innerHTML = '';
+
+            books.forEach(book => {
+                const availableCopies = book.copies.filter(copy => copy).length;
+                const isOwned = borrowedBooks.some(b => b.bookId === book.id);
+                const isReserved = reservations.some(r => r.bookId === book.id);
+
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                bookCard.innerHTML = `
+                    <div class="book-title">${book.title}</div>
+                    <div class="book-author">by ${book.author}</div>
+                    <div class="book-status ${availableCopies === 3 ? 'status-available' : 
+                        (isReserved ? 'status-reserved' : 'status-borrowed')}">
+                        ${availableCopies}/3 Available
+                    </div>
+                    <div class="action-buttons">
+                        ${!isAdmin ? `
+                            <button class="btn btn-small ${availableCopies > 0 && !isOwned ? '' : 'btn-danger'}" 
+                                    onclick="${availableCopies > 0 && !isOwned ? `borrowBook(${book.id})` : ''}"
+                                    ${availableCopies === 0 || isOwned ? 'disabled' : ''}>
+                                ${availableCopies > 0 && !isOwned ? 'Borrow' : 'Owned'}
+                            </button>
+                            <button class="btn btn-small ${isReserved ? 'btn-danger' : ''}" 
+                                    onclick="${isReserved ? `cancelReservation(${book.id})` : `reserveBook(${book.id})`}">
+                                ${isReserved ? 'Cancel Reserve' : 'Reserve'}
+                            </button>
+                        ` : ''}
+                        ${isAdmin ? `
+                            <button class="btn btn-small btn-danger" onclick="deleteBook(${book.id})">Delete</button>
+                        ` : ''}
+                    </div>
+                `;
+                targetContainer.appendChild(bookCard);
+            });
+        }
+
+        function borrowBook(bookId) {
+            const book = books.find(b => b.id === bookId);
+            const availableIndex = book.copies.findIndex(copy => copy);
+            
+            if (availableIndex !== -1) {
+                book.copies[availableIndex] = false;
+                borrowedBooks.push({
+                    bookId,
+                    borrowDate: new Date(),
+                    dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+                });
+                
+                addActivity('borrowed', book.title);
+                renderCatalog();
+                renderMyBooks();
+            }
+        }
+
+        function reserveBook(bookId) {
+            reservations.push({ bookId, reserveDate: new Date() });
+            const book = books.find(b => b.id === bookId);
+            addActivity('reserved', book.title);
+            renderCatalog();
+        }
+        function cancelReservation(bookId) {
+            reservations = reservations.filter(r => r.bookId !== bookId);
+            const book = books.find(b => b.id === bookId);
+            addActivity('canceled reservation', book.title);
+            renderCatalog();
+        }
+        function renderMyBooks() {
+            const container = document.getElementById('myBooksGrid');
+            container.innerHTML = '';
+
+            borrowedBooks.forEach(borrow => {
+                const book = books.find(b => b.id === borrow.bookId);
+                const isOverdue = new Date() > borrow.dueDate;
+
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                bookCard.innerHTML = `
+                    <div class="book-title
+                        ${isOverdue ? 'status-borrowed' : 'status-available'}">
+                        ${book.title}
+                    </div>
+                    <div class="book-author">by ${book.author}</div>
+                    <div class="book-status ${isOverdue ? 'status-borrowed' : 'status-available'}">
+                        Due: ${borrow.dueDate.toLocaleDateString()}
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-small btn-danger" onclick="returnBook(${borrow.bookId})">Return</button>
+                    </div>
+                `;
+                container.appendChild(bookCard);
+            });
+        }
+        function returnBook(bookId) {
+            const book = books.find(b => b.id === bookId);
+            const borrowIndex = borrowedBooks.findIndex(b => b.bookId === bookId);
+            
+            if (borrowIndex !== -1) {
+                book.copies[book.copies.findIndex(copy => !copy)] = true;
+                const borrow = borrowedBooks[borrowIndex];
+                const isOverdue = new Date() > borrow.dueDate;
+
+                addActivity('returned', book.title, isOverdue ? 'Late' : 'On Time');
+                borrowedBooks.splice(borrowIndex, 1);
+                renderCatalog();
+                renderMyBooks();
+            }
+        }
+        function addBook() {
+            const title = document.getElementById('newBookTitle').value;
+            const author = document.getElementById('newBookAuthor').value;
+
+            if (title && author) {
+                const newBook = {
+                    id: books.length + 1,
+                    title,
+                    author,
+                    copies: [true, true, true]
+                };
+                books.push(newBook);
+                document.getElementById('newBookTitle').value = '';
+                document.getElementById('newBookAuthor').value = '';
+                renderCatalog();
+            } else {
+                alert('Please enter both title and author!');
+            }
+        }
+        function deleteBook(bookId) {
+            books = books.filter(b => b.id !== bookId);
+            renderCatalog();
+        }
+        function renderHistory() {
+            const tableBody = document.getElementById('historyTable');
+            tableBody.innerHTML = '';
+
+            userActivity.forEach(activity => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${activity.date.toLocaleString()}</td>
+                    <td>${activity.book}</td>
+                    <td>${activity.action}</td>
+                    <td>${activity.status || ''}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        function renderLateFees() {
+            const tableBody = document.getElementById('lateFeeTable');
+            tableBody.innerHTML = '';
+
+            borrowedBooks.forEach(borrow => {
+                const book = books.find(b => b.id === borrow.bookId);
+                const isOverdue = new Date() > borrow.dueDate;
+                const daysLate = isOverdue ? Math.ceil((new Date() - borrow.dueDate) / (1000 * 60 * 60 * 24)) : 0;
+                const fine = daysLate * 0.5; // $0.5 per day late
+
+                if (isOverdue) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${currentUser.username}</td>
+                        <td>${book.title}</td>
+                        <td>${borrow.dueDate.toLocaleDateString()}</td>
+                        <td>${daysLate}</td>
+                        <td>${fine.toFixed(2)}</td>
+                        <td>${fine > 0 ? 'Unpaid' : 'Paid'}</td>
+                    `;
+                    tableBody.appendChild(row);
+                }
+            });
+        }
+        function addActivity(action, bookTitle, status) {
+            userActivity.push({
+                date: new Date(),
+                book: bookTitle,
+                action,
+                status
+            });
+        }
+    </script>
+</body>
+</html>
